@@ -14,6 +14,11 @@ export interface WorkflowListItemProps {
     archived: boolean;
 }
 
+function wfDuration(workflow: models.WorkflowStatus, now: moment.Moment) {
+    const endTime = workflow.finishedAt ? moment(workflow.finishedAt) : now;
+    return endTime.diff(moment(workflow.startedAt)) / 1000;
+}
+
 export const WorkflowListItem = (props: WorkflowListItemProps) => (
     <div className='workflow-list-item'>
         <div className='workflow-list-item__top'>
@@ -54,6 +59,12 @@ export const WorkflowListItem = (props: WorkflowListItemProps) => (
                             <div className='columns large-4'>CREATED:</div>
                             <div className='columns large-8'>
                                 <Timestamp date={props.workflow.metadata.creationTimestamp} />
+                            </div>
+                        </div>
+                        <div className='workflow-list-item__content-details-row row'>
+                            <div className='columns large-4'>DURATION:</div>
+                            <div className='columns large-8'>
+                                <Ticker>{now => <Duration durationMs={wfDuration(props.workflow.status, now)} />}</Ticker>
                             </div>
                         </div>
                     </div>
