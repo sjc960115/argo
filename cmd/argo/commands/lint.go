@@ -13,6 +13,7 @@ import (
 	"github.com/argoproj/argo/cmd/argo/commands/client"
 	workflowpkg "github.com/argoproj/argo/pkg/apiclient/workflow"
 	"github.com/argoproj/argo/workflow/validate"
+	"github.com/argoproj/pkg/errors"
 )
 
 func NewLintCommand() *cobra.Command {
